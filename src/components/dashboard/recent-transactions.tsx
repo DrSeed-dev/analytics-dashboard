@@ -1,4 +1,6 @@
-import type { Transaction, TransactionStatus } from "@/types/dashboard";
+"use client";
+
+import { useState } from "react";import type { Transaction, TransactionStatus } from "@/types/dashboard";
 
 type RecentTransactionsProps = {
   transactions: Transaction[];
@@ -15,9 +17,17 @@ const statusStyles: Record<TransactionStatus, string> = {
   Cancelled: "bg-rose-50 text-rose-700 ring-rose-600/20",
 };
 
+const PREVIEW_COUNT = 5;
+
 export function RecentTransactions({
   transactions,
 }: RecentTransactionsProps) {
+  const [showAll, setShowAll] = useState(false);
+  const canExpand = transactions.length > PREVIEW_COUNT;
+  const visibleTransactions = showAll
+    ? transactions
+    : transactions.slice(0, PREVIEW_COUNT);
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-6">
@@ -30,12 +40,15 @@ export function RecentTransactions({
           </p>
         </div>
 
-        <button
-          className="shrink-0 text-sm font-semibold text-indigo-600 transition hover:text-indigo-700"
-          type="button"
-        >
-          View all
-        </button>
+        {canExpand && (
+          <button
+            className="shrink-0 text-sm font-semibold text-indigo-600 transition hover:text-indigo-700"
+            onClick={() => setShowAll((value) => !value)}
+            type="button"
+          >
+            {showAll ? "Show less" : "View all"}
+          </button>
+        )}
       </div>
 
       <div className="overflow-x-auto border-t border-slate-200">
@@ -65,7 +78,7 @@ export function RecentTransactions({
           </thead>
 
           <tbody className="divide-y divide-slate-100">
-            {transactions.map((transaction) => (
+            {visibleTransactions.map((transaction) => (
               <tr
                 className="transition hover:bg-slate-50/80"
                 key={transaction.id}
