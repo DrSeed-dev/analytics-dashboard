@@ -39,7 +39,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               A
             </span>
             <span>
-              <span className="block text-base leading-none">Ast Random</span>
+              <span className="block text-base leading-none">Asteria</span>
               <span className="mt-1 block text-xs font-medium text-slate-500">Analytics</span>
             </span>
           </Link>

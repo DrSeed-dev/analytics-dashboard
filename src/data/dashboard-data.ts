@@ -71,7 +71,7 @@ export const dashboardData: Record<TimeRange, PeriodDashboardData> = {
       {
         id: "revenue",
         label: "Total Revenue",
-        value: "$2,860",
+        value: "$72,860",
         change: "+10.8%",
         description: "vs. previous 30 days",
       },
