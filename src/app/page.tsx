@@ -14,7 +14,15 @@ import type { TimeRange } from "@/types/dashboard";
 export default function Home() {
   const [selectedRange, setSelectedRange] = useState<TimeRange>("12m");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const selectedData = dashboardData[selectedRange];
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredTransactions = recentTransactions.filter(
+    (transaction) =>
+      transaction.customer.toLowerCase().includes(normalizedSearch) ||
+      transaction.product.toLowerCase().includes(normalizedSearch),
+  );
 
   return (
     <div className="min-h-screen bg-slate-50 lg:flex">
@@ -24,6 +32,8 @@ export default function Home() {
         <DashboardHeader
           onMenuClick={() => setIsSidebarOpen(true)}
           onRangeChange={setSelectedRange}
+          onSearchChange={setSearchTerm}
+          searchValue={searchTerm}
           selectedRange={selectedRange}
         />
 
@@ -40,7 +50,7 @@ export default function Home() {
           </section>
 
           <section className="mt-6">
-            <RecentTransactions transactions={recentTransactions} />
+            <RecentTransactions transactions={filteredTransactions} />
           </section>
         </main>
       </div>

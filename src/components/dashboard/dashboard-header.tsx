@@ -4,6 +4,8 @@ type DashboardHeaderProps = {
   selectedRange: TimeRange;
   onRangeChange: (range: TimeRange) => void;
   onMenuClick: () => void;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
 };
 
 const ranges: { label: string; value: TimeRange }[] = [
@@ -17,6 +19,8 @@ export function DashboardHeader({
   selectedRange,
   onRangeChange,
   onMenuClick,
+  searchValue,
+  onSearchChange,
 }: DashboardHeaderProps) {
   return (
     <header className="border-b border-slate-200 bg-white px-4 py-4 sm:px-6 lg:px-8">
@@ -49,15 +53,17 @@ export function DashboardHeader({
             <span className="sr-only">Search dashboard data</span>
             <input
               className="w-36 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
-              placeholder="Search"
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder="Search customer or product"
               type="search"
+              value={searchValue}
             />
           </label>
 
           <button
             aria-label="View notifications"
             className="relative rounded-lg border border-slate-200 p-2 text-slate-600 hover:bg-slate-50"
-            type="button"
+            type="button" 
           >
             ♢
             <span className="absolute right-1.5 top-1.5 size-1.5 rounded-full bg-rose-500" />

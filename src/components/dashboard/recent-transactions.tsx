@@ -105,6 +105,12 @@ export function RecentTransactions({
           </tbody>
         </table>
       </div>
+
+      {transactions.length === 0 && (
+        <p className="border-t border-slate-200 px-6 py-10 text-center text-sm text-slate-500">
+          No transactions match your search.
+        </p>
+      )}
     </section>
   );
 }
